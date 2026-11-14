@@ -227,7 +227,45 @@ h2:after{content:"";display:block;height:3px;width:0;margin-top:10px;border-radi
 @media(max-width:860px){.world-picks{grid-template-columns:1fr}.world-pick{min-height:300px}.world-pick .planet{width:250px;height:250px;right:-8%;top:-20px}.journey-grid{grid-template-columns:1fr}.journey-visual{position:sticky;top:76px;height:34vh;min-height:240px;z-index:2}.journey-visual .vehicle-art{height:120px;bottom:15%}.journey-step{min-height:54vh;padding:23px}.journey-steps{gap:12px}.journey-head{margin-bottom:24px}}
 @media(prefers-reduced-motion:reduce){.world-pick,.world-pick .planet,.journey-step,.journey-visual .vehicle-art{transition:none!important}.scroll-cue i:after{animation:none}}
 
-</style></head><body><canvas id="bg" aria-hidden="true"></canvas><div id="pg"></div>
+
+/* Detail-only motion treatment: original mission imagery, not substitute vehicle drawings. */
+.echoes-motion-section .sub{max-width:760px}
+.echoes-motion-scene{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(240px,48vw,520px);border:1px solid rgba(190,150,255,.35);border-radius:18px;background:#080713;box-shadow:0 18px 55px rgba(0,0,0,.35)}
+.echoes-motion-scene.mars{background:linear-gradient(180deg,#120b20 0%,#38213b 45%,#9a5034 72%,#4b2927 100%)}
+.echoes-motion-scene.moon{background:linear-gradient(180deg,#05050c 0%,#10101a 58%,#7e7b83 59%,#34313b 100%)}
+.echoes-motion-scene.titan{background:linear-gradient(180deg,#180d18 0%,#71351e 45%,#d17b3b 72%,#65301f 100%)}
+.echoes-motion-scene.earth{background:radial-gradient(ellipse at 55% 120%,#4387b5 0%,#17375b 40%,#050713 72%)}
+.echoes-stars{position:absolute;inset:0;opacity:.42;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#d8baff 1px,transparent 1.5px);background-size:83px 73px,127px 109px;background-position:10px 13px,42px 31px;animation:echoesStarDrift 22s linear infinite}
+.echoes-planet-horizon{position:absolute;left:-10%;right:-10%;bottom:-38%;height:72%;border-radius:50% 50% 0 0;background:linear-gradient(180deg,rgba(255,174,112,.22),rgba(9,7,18,.88));filter:blur(2px);z-index:0}
+.echoes-moving-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;z-index:1;animation:echoesPhotoFloat 9s ease-in-out infinite alternate;filter:drop-shadow(0 14px 22px rgba(0,0,0,.38))}
+.echoes-motion-scene.mars .echoes-moving-photo,.echoes-motion-scene.titan .echoes-moving-photo{object-fit:cover}
+.echoes-motion-caption{position:absolute;z-index:2;left:16px;bottom:14px;padding:7px 12px;border-radius:999px;background:rgba(12,7,25,.72);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:13px;backdrop-filter:blur(8px)}
+.echoes-credit{font-size:12px;color:var(--tx2);margin-top:10px}
+.echoes-real-video{margin-top:18px;border:1px solid rgba(190,150,255,.28);border-radius:16px;overflow:hidden;background:#05040a}
+.echoes-real-video iframe{display:block;width:100%;aspect-ratio:16/9;border:0}
+.echoes-real-video small{display:block;padding:8px 12px;color:var(--tx2)}
+@keyframes echoesPhotoFloat{0%{transform:scale(1.015) translate3d(-.5%,.4%,0)}100%{transform:scale(1.075) translate3d(.7%,-.8%,0)}}
+@keyframes echoesStarDrift{from{background-position:10px 13px,42px 31px}to{background-position:93px 86px,169px 140px}}
+@media(prefers-reduced-motion:reduce){.echoes-moving-photo,.echoes-stars{animation:none}}
+@media(max-width:640px){.echoes-motion-scene{min-height:260px}.echoes-motion-scene.mars .echoes-moving-photo,.echoes-motion-scene.titan .echoes-moving-photo{object-fit:contain}}
+</style>
+<style id="echoes-original-image-motion">
+@keyframes echoesNasaPhotoDrift {
+  0%   { object-position: 44% 46%; }
+  50%  { object-position: 54% 52%; }
+  100% { object-position: 48% 56%; }
+}
+.hc img, .card .ph img {
+  animation: echoesNasaPhotoDrift 9s ease-in-out infinite alternate;
+  will-change: object-position;
+}
+.hc:nth-child(3n) img, .card:nth-child(3n) .ph img { animation-duration: 11s; }
+.hc:nth-child(3n + 1) img, .card:nth-child(3n + 1) .ph img { animation-duration: 8s; }
+@media (prefers-reduced-motion: reduce) {
+  .hc img, .card .ph img { animation: none !important; }
+}
+</style>
+</head><body><canvas id="bg" aria-hidden="true"></canvas><div id="pg"></div>
 <canvas id="stars" aria-hidden="true"></canvas><div id="glow" aria-hidden="true"></div><div id="bar" aria-hidden="true"></div>
 <header><div class="w nav"><a class="logo" href="#/"><svg width="54" height="42" viewBox="0 0 52 40" fill="none" stroke="#FF9A3C" stroke-width="2" aria-hidden="true"><ellipse cx="26" cy="20" rx="24" ry="10" transform="rotate(-25 26 20)"/><circle cx="26" cy="20" r="7" fill="#2a1250"/><circle cx="26" cy="20" r="2.5" fill="#FF9A3C"/></svg><span class="lt"><b>ECHOES</b><small>The Forgotten Explorers</small></span></a>
 <button id="lg" aria-label="Language / اللغة">EN</button><button id="mb" aria-label="Menu" aria-expanded="false">Menu</button>
@@ -270,6 +308,17 @@ tl:[["July 7, 2003","Opportunity launches"],["January 24, 2004","Lands on Mars"]
 disc:["Opportunity found evidence that water once existed at its landing region on ancient Mars.","Its long operational life gave scientists a detailed record of Martian rocks and terrain."],
 rem:["In 2018 a huge dust storm blocked sunlight and the rover stopped communicating. After many attempts to contact it, NASA declared the mission complete on February 13, 2019.","Opportunity remains on Mars. It is inactive and is not operating. The last communication (June 10, 2018) and the end declaration (February 13, 2019) are different dates."],
 src:[["NASA Science — Opportunity","https://science.nasa.gov/mission/mer-opportunity/"],["NASA — Opportunity mission end","https://www.nasa.gov/news-release/nasas-record-setting-opportunity-rover-mission-on-mars-comes-to-end/"]]}
+,
+{id:"eagle",name:"Eagle Lunar Module",world:"Moon",type:"Lunar lander",kind:"lander",mission:"Apollo 11",period:"1969",status:"Mission complete — inactive",short:"The lunar module that carried astronauts to the Moon’s surface.",tag:"The lunar module that carried astronauts to the Moon’s surface.",img:"",credit:"Illustrative animated artwork.",story:["The lunar module that carried astronauts to the Moon’s surface."],facts:[["Mission", "Apollo 11"], ["Period", "1969"], ["Location", "Moon"], ["Type", "Lunar lander"], ["Status", "Mission complete — inactive"]],how:["The lunar module that carried astronauts to the Moon’s surface."],tl:[["1969","The lunar module that carried astronauts to the Moon’s surface."]],disc:["The lunar module that carried astronauts to the Moon’s surface."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"lrv1",name:"LRV-1 Lunar Roving Vehicle",world:"Moon",type:"Crewed rover",kind:"rover",mission:"Apollo 15",period:"1971",status:"Mission complete — inactive",short:"The battery-powered rover that expanded astronauts’ range on the Moon.",tag:"The battery-powered rover that expanded astronauts’ range on the Moon.",img:"",credit:"Illustrative animated artwork.",story:["The battery-powered rover that expanded astronauts’ range on the Moon."],facts:[["Mission", "Apollo 15"], ["Period", "1971"], ["Location", "Moon"], ["Type", "Crewed rover"], ["Status", "Mission complete — inactive"]],how:["The battery-powered rover that expanded astronauts’ range on the Moon."],tl:[["1971","The battery-powered rover that expanded astronauts’ range on the Moon."]],disc:["The battery-powered rover that expanded astronauts’ range on the Moon."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"surveyor3",name:"Surveyor 3",world:"Moon",type:"Robotic lander",kind:"lander",mission:"Surveyor 3",period:"1967",status:"Mission complete — inactive",short:"A robotic spacecraft that examined the lunar surface.",tag:"A robotic spacecraft that examined the lunar surface.",img:"",credit:"Illustrative animated artwork.",story:["A robotic spacecraft that examined the lunar surface."],facts:[["Mission", "Surveyor 3"], ["Period", "1967"], ["Location", "Moon"], ["Type", "Robotic lander"], ["Status", "Mission complete — inactive"]],how:["A robotic spacecraft that examined the lunar surface."],tl:[["1967","A robotic spacecraft that examined the lunar surface."]],disc:["A robotic spacecraft that examined the lunar surface."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"ingenuity",name:"Ingenuity Mars Helicopter",world:"Mars",type:"Robotic helicopter",kind:"lander",mission:"Mars 2020",period:"2021–2024",status:"Mission complete — inactive",short:"The first aircraft to make powered, controlled flights on another planet.",tag:"The first aircraft to make powered, controlled flights on another planet.",img:"",credit:"Illustrative animated artwork.",story:["The first aircraft to make powered, controlled flights on another planet."],facts:[["Mission", "Mars 2020"], ["Period", "2021–2024"], ["Location", "Mars"], ["Type", "Robotic helicopter"], ["Status", "Mission complete — inactive"]],how:["The first aircraft to make powered, controlled flights on another planet."],tl:[["2021–2024","The first aircraft to make powered, controlled flights on another planet."]],disc:["The first aircraft to make powered, controlled flights on another planet."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"landingdebris",name:"The Landing Debris",world:"Mars",type:"Mission hardware",kind:"lander",mission:"Mars missions",period:"2021",status:"Mission complete — inactive",short:"Hardware and landing remnants left behind on the Martian surface.",tag:"Hardware and landing remnants left behind on the Martian surface.",img:"",credit:"Illustrative animated artwork.",story:["Hardware and landing remnants left behind on the Martian surface."],facts:[["Mission", "Mars missions"], ["Period", "2021"], ["Location", "Mars"], ["Type", "Mission hardware"], ["Status", "Mission complete — inactive"]],how:["Hardware and landing remnants left behind on the Martian surface."],tl:[["2021","Hardware and landing remnants left behind on the Martian surface."]],disc:["Hardware and landing remnants left behind on the Martian surface."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"alsep",name:"ALSEP",world:"Moon",type:"Science instruments",kind:"lander",mission:"Apollo missions",period:"1969–1977",status:"Mission complete — inactive",short:"A collection of experiments deployed by Apollo astronauts to study the Moon.",tag:"A collection of experiments deployed by Apollo astronauts to study the Moon.",img:"",credit:"Illustrative animated artwork.",story:["A collection of experiments deployed by Apollo astronauts to study the Moon."],facts:[["Mission", "Apollo missions"], ["Period", "1969–1977"], ["Location", "Moon"], ["Type", "Science instruments"], ["Status", "Mission complete — inactive"]],how:["A collection of experiments deployed by Apollo astronauts to study the Moon."],tl:[["1969–1977","A collection of experiments deployed by Apollo astronauts to study the Moon."]],disc:["A collection of experiments deployed by Apollo astronauts to study the Moon."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"mooncart",name:"Moon Cart",world:"Moon",type:"Crew equipment",kind:"lander",mission:"Apollo missions",period:"1971",status:"Mission complete — inactive",short:"A utility cart used to move tools and equipment across the lunar surface.",tag:"A utility cart used to move tools and equipment across the lunar surface.",img:"",credit:"Illustrative animated artwork.",story:["A utility cart used to move tools and equipment across the lunar surface."],facts:[["Mission", "Apollo missions"], ["Period", "1971"], ["Location", "Moon"], ["Type", "Crew equipment"], ["Status", "Mission complete — inactive"]],how:["A utility cart used to move tools and equipment across the lunar surface."],tl:[["1971","A utility cart used to move tools and equipment across the lunar surface."]],disc:["A utility cart used to move tools and equipment across the lunar surface."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"firststepcamera",name:"First-step Camera",world:"Moon",type:"Mission equipment",kind:"lander",mission:"Apollo 11",period:"1969",status:"Mission complete — inactive",short:"The camera used to document the first steps on the lunar surface.",tag:"The camera used to document the first steps on the lunar surface.",img:"",credit:"Illustrative animated artwork.",story:["The camera used to document the first steps on the lunar surface."],facts:[["Mission", "Apollo 11"], ["Period", "1969"], ["Location", "Moon"], ["Type", "Mission equipment"], ["Status", "Mission complete — inactive"]],how:["The camera used to document the first steps on the lunar surface."],tl:[["1969","The camera used to document the first steps on the lunar surface."]],disc:["The camera used to document the first steps on the lunar surface."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"spirit",name:"Spirit Mars Rover",world:"Mars",type:"Robotic rover",kind:"rover",mission:"Mars Exploration Rover (MER-A)",period:"2004–2010",status:"Mission complete — inactive",short:"A rover that explored Gusev Crater and studied Martian rocks.",tag:"A rover that explored Gusev Crater and studied Martian rocks.",img:"",credit:"Illustrative animated artwork.",story:["A rover that explored Gusev Crater and studied Martian rocks."],facts:[["Mission", "Mars Exploration Rover (MER-A)"], ["Period", "2004–2010"], ["Location", "Mars"], ["Type", "Robotic rover"], ["Status", "Mission complete — inactive"]],how:["A rover that explored Gusev Crater and studied Martian rocks."],tl:[["2004–2010","A rover that explored Gusev Crater and studied Martian rocks."]],disc:["A rover that explored Gusev Crater and studied Martian rocks."],rem:["This archived machine or equipment is no longer operating."],src:[]},
+{id:"insight",name:"InSight",world:"Mars",type:"Robotic lander",kind:"lander",mission:"InSight",period:"2018–2022",status:"Mission complete — inactive",short:"A stationary lander that studied Mars’ interior and measured marsquakes.",tag:"A stationary lander that studied Mars’ interior and measured marsquakes.",img:"",credit:"Illustrative animated artwork.",story:["A stationary lander that studied Mars’ interior and measured marsquakes."],facts:[["Mission", "InSight"], ["Period", "2018–2022"], ["Location", "Mars"], ["Type", "Robotic lander"], ["Status", "Mission complete — inactive"]],how:["A stationary lander that studied Mars’ interior and measured marsquakes."],tl:[["2018–2022","A stationary lander that studied Mars’ interior and measured marsquakes."]],disc:["A stationary lander that studied Mars’ interior and measured marsquakes."],rem:["This archived machine or equipment is no longer operating."],src:[]}
 ];
 A.forEach(a=>{a.img=IMG[a.id];a.credit="Concept illustration from the project’s design reference — not a NASA photograph. Replace with an official NASA/JPL image from images.nasa.gov."});
 window.__P=[];const L=(e,a)=>(__P.push([e,a]),e),LS=(e,a)=>(__P.push([e+" —",a+" —"]),L(e,a));
@@ -345,9 +394,101 @@ const NTL=[["July 21, 1969","تُترك مراحل الهبوط على القم�
 const MYTL=[["December 11, 1998",L("Mars Climate Orbiter launches","إطلاق مدار المناخ المريخي"),"Mars","mco",L("A weather orbiter and relay for Mars.","مدار طقس ومحطة ترحيل للمريخ.")],["September 23, 1999",L("Mars Climate Orbiter is lost","فقدان مدار المناخ المريخي"),"Mars","mco",L("Contact ends during the orbit burn.","ينقطع الاتصال أثناء حرق المدار.")],["January 3, 1999",L("Mars Polar Lander launches","إطلاق هبّاطة المريخ القطبية"),"Mars","mpl",L("A lander headed for the south pole.","هبّاطة متجهة إلى القطب الجنوبي.")],["December 3, 1999",L("Mars Polar Lander goes silent","صمت هبّاطة المريخ القطبية"),"Mars","mpl",L("No signal after entry.","لا إشارة بعد الدخول.")],...NTL];
 const ST=[[A.length+14,L("Spacecraft in the archive","مركبة في الأرشيف")],[2,L("Worlds","عالمان")],[57,L("Years since Apollo 11","سنة منذ أبولو 11")],[2,L("Lost on arrival","فُقدت عند الوصول")]];
 Object.assign(window,{ART});
+
+/* Animated illustrations for the three featured explorers.
+   These replace the original photo assets without changing the rest of the archive. */
+A.find(a=>a.id==="apollo11").img=SV(`
+<path d="M0 320Q160 290 320 320T640 312V400H0Z" fill="#777184"/>
+<g opacity=".9" fill="#bcb6c8"><circle cx="92" cy="326" r="3"/><circle cx="520" cy="344" r="4"/><circle cx="430" cy="315" r="2"/></g>
+<g transform="translate(320 224)">
+  <ellipse cx="0" cy="75" rx="112" ry="13" fill="#080512" opacity=".45"/>
+  <g stroke="#e7ddf4" stroke-width="5" fill="none">
+    <path d="M-78 42L-60-22 0-55 60-22 78 42M-60-22L60-22M-78 42L78 42M0-55V42M-60-22L0 42 60-22"/>
+    <path d="M-78 42L-60 55M78 42L60 55"/>
+  </g>
+  <g fill="#c7b8df" stroke="#fff0d6" stroke-width="2">
+    <path d="M-60-22L-42-34 0-18 42-34 60-22 0-4Z"/>
+    <path d="M-42-34L-42-12 0 4 42-12 42-34" fill="#8e83a9"/>
+  </g>
+  <path d="M0-8L0-115" stroke="#ffb45f" stroke-width="3" stroke-dasharray="7 8">
+    <animate attributeName="opacity" values=".15;1;.15" dur="2.4s" repeatCount="indefinite"/>
+  </path>
+  <circle cx="0" cy="-115" r="8" fill="#ffb45f"><animate attributeName="r" values="5;10;5" dur="2.4s" repeatCount="indefinite"/></circle>
+  <g transform="translate(0 0)"><animateTransform attributeName="transform" type="rotate" values="-2;2;-2" dur="7s" repeatCount="indefinite"/></g>
+</g>`);
+A.find(a=>a.id==="sojourner").img=SV(`
+<path d="M0 325Q150 290 300 322T640 310V400H0Z" fill="#8e493b"/>
+<g transform="translate(320 238)">
+  <animateTransform attributeName="transform" type="translate" values="320 242;320 235;320 242" dur="3.2s" repeatCount="indefinite"/>
+  <ellipse cx="0" cy="75" rx="125" ry="12" fill="#080512" opacity=".4"/>
+  <path d="M-95 32L-70 12 70 12 96 34" fill="none" stroke="#d8c7e8" stroke-width="7"/>
+  <rect x="-72" y="-24" width="144" height="56" rx="10" fill="#d9c5a4" stroke="#33243b" stroke-width="5"/>
+  <rect x="-40" y="-47" width="76" height="25" rx="5" fill="#6e85a4" stroke="#33243b" stroke-width="4"/>
+  <path d="M-4-47V-88L18-101" fill="none" stroke="#e9d9c2" stroke-width="6"/>
+  <circle cx="18" cy="-101" r="7" fill="#ffb45f"/>
+  <path d="M-72-5L-115-22M72-5L115-22" stroke="#e9d9c2" stroke-width="6"/>
+  <g fill="#252039" stroke="#c8b6df" stroke-width="5">
+    <circle cx="-83" cy="48" r="23"/><circle cx="0" cy="48" r="23"/><circle cx="83" cy="48" r="23"/>
+  </g>
+  <g stroke="#ffb45f" stroke-width="3" fill="none">
+    <path d="M-83 27V69M-104 48H-62M0 25V71M-22 48H22M83 27V69M62 48H104">
+      <animateTransform attributeName="transform" type="rotate" values="0 0 48;360 0 48" dur="2.2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+</g>`);
+A.find(a=>a.id==="opportunity").img=SV(`
+<path d="M0 325Q150 290 300 322T640 310V400H0Z" fill="#9b5140"/>
+<g transform="translate(320 236)">
+  <animateTransform attributeName="transform" type="translate" values="320 240;320 232;320 240" dur="4s" repeatCount="indefinite"/>
+  <ellipse cx="0" cy="78" rx="150" ry="13" fill="#080512" opacity=".4"/>
+  <rect x="-65" y="-25" width="130" height="58" rx="9" fill="#e7d8bd" stroke="#30243b" stroke-width="5"/>
+  <rect x="-24" y="-56" width="48" height="33" rx="5" fill="#9f8bbd" stroke="#30243b" stroke-width="4"/>
+  <path d="M0-56V-112M0-112L-20-128M0-112L20-128" stroke="#e9d9c2" stroke-width="6" fill="none"/>
+  <circle cx="0" cy="-132" r="9" fill="#ffb45f"/>
+  <path d="M-65-10L-125-38  -125 25 -65 15M65-10L125-38 125 25 65 15" fill="#416a8e" stroke="#d7c7e9" stroke-width="5"/>
+  <path d="M-119-25L-72-10M-119 4L-72 9M72-10L119-25M72 9L119 4" stroke="#a8d6ee" stroke-width="3"/>
+  <g fill="#252039" stroke="#c8b6df" stroke-width="5">
+    <circle cx="-100" cy="48" r="25"/><circle cx="0" cy="48" r="25"/><circle cx="100" cy="48" r="25"/>
+  </g>
+  <g stroke="#ffb45f" stroke-width="3" fill="none">
+    <path d="M-100 23V73M-125 48H-75M0 23V73M-25 48H25M100 23V73M75 48H125">
+      <animateTransform attributeName="transform" type="rotate" values="0 0 48;360 0 48" dur="2.8s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  <path d="M0-110Q38-145 72-112" fill="none" stroke="#ffb45f" stroke-width="3" stroke-dasharray="5 7">
+    <animate attributeName="opacity" values=".2;1;.2" dur="2s" repeatCount="indefinite"/>
+  </path>
+</g>`);
+
+/* Additional entries in the mission register, each with its own animated illustration. */
+const addedArchiveIds = ["eagle","lrv1","surveyor3","ingenuity","landingdebris","alsep","mooncart","firststepcamera","spirit","insight"];
+addedArchiveIds.forEach((id,i)=>{
+  const lunar = ["eagle","lrv1","surveyor3","alsep","mooncart","firststepcamera"].includes(id);
+  const terrain = lunar ? "#777184" : "#98513f";
+  const craft = id==="ingenuity"
+    ? `<g transform="translate(320 190)"><animateTransform attributeName="transform" type="translate" values="320 185;320 165;320 185" dur="3s" repeatCount="indefinite"/><path d="M-90 0H90M0-8V-50M-120-10H120" stroke="#e8d9c7" stroke-width="5"/><rect x="-35" y="-5" width="70" height="38" rx="8" fill="#cbb8a1"/><path d="M-145-40H145" stroke="#ffb45f" stroke-width="4"><animateTransform attributeName="transform" type="rotate" values="0;360" dur=".7s" repeatCount="indefinite"/></path><circle cx="0" cy="-52" r="7" fill="#ffb45f"/></g>`
+    : `<g transform="translate(320 235)"><animateTransform attributeName="transform" type="translate" values="320 240;320 232;320 240" dur="4s" repeatCount="indefinite"/><ellipse cx="0" cy="78" rx="130" ry="12" fill="#080512" opacity=".4"/><rect x="-62" y="-25" width="124" height="58" rx="8" fill="#d9c9b3" stroke="#30243b" stroke-width="5"/><rect x="-24" y="-55" width="48" height="30" rx="5" fill="#8794ad" stroke="#30243b" stroke-width="4"/><path d="M0-55V-110M-62-5L-112-32 -112 25 -62 12M62-5L112-32 112 25 62 12" fill="none" stroke="#e9d9c2" stroke-width="5"/><g fill="#252039" stroke="#c8b6df" stroke-width="5"><circle cx="-88" cy="48" r="23"/><circle cx="0" cy="48" r="23"/><circle cx="88" cy="48" r="23"/></g><path d="M-88 25V71M0 25V71M88 25V71" stroke="#ffb45f" stroke-width="3"><animate attributeName="opacity" values=".2;1;.2" dur="1.6s" repeatCount="indefinite"/></path></g>`;
+  A.find(a=>a.id===id).img=SV(`<path d="M0 325Q150 290 300 322T640 310V400H0Z" fill="${terrain}"/><g opacity=".8" fill="#d6c5d8"><circle cx="80" cy="330" r="3"/><circle cx="520" cy="344" r="4"/><circle cx="430" cy="315" r="2"/></g>${craft}<circle cx="500" cy="75" r="3" fill="#fff"><animate attributeName="opacity" values=".2;1;.2" dur="2s" repeatCount="indefinite"/></circle>`);
+});
+
 const HC2={lm:["هبّاطات أبولو","مراحل الهبوط","ست قواعد صامتة على القمر."],huygens:["مسبار هويجنز","كاسيني–هويجنز","أبعد هبوط في التاريخ."],mir:["محطة مير","1986 – 2001","نهاية مخطَّطة لا حادث."],mco:[L("Climate Orbiter","مدار المناخ"),MS,L("Lost to a units mix-up.","فُقد بسبب خلط الوحدات.")],mpl:[L("Polar Lander","الهبّاطة القطبية"),MS,L("Silent since its descent.","صامتة منذ هبوطها.")]};
 const HC={apollo11:["Apollo 11","Laser Retroreflector","A passive instrument that still helps us measure the Moon."],sojourner:["Sojourner","Mars Pathfinder","A small rover with a big impact."],opportunity:["Opportunity","Mars Rover","A long journey of discovery."],...HC2};
-const hcard=a=>`<a class="hc" href="#/artifact/${a.id}" aria-label="${a.name}"><img src="${a.img}" alt="${a.name} on ${a.world}"><span class="pill ${a.world}">${a.world}</span><div class="ft"><span class="ar">→</span><div><b>${HC[a.id][0]}</b><small>${HC[a.id][1]}</small></div><div class="d">${HC[a.id][2]}</div></div></a>`;
+
+/* NASA / museum original imagery. Only vehicle image sources are replaced here. */
+A.find(a=>a.id==="apollo11").img="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/lunar-science/2023/09/as11-40-5873_orig-1.jpg";
+A.find(a=>a.id==="sojourner").img="https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA04318.jpg";
+A.find(a=>a.id==="opportunity").img="https://d2pn8kiwq2w21t.cloudfront.net/images/missionswebmer.height-1024.jpg";
+A.find(a=>a.id==="eagle").img="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/lunar-science/2023/09/as11-40-5927_orig.jpg";
+A.find(a=>a.id==="lrv1").img="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/2/2-apollo_15_on_moon-1.jpg";
+A.find(a=>a.id==="surveyor3").img="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/lunar-science/2023/09/as12-48-7121_orig.jpg";
+A.find(a=>a.id==="ingenuity").img="https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA23882.jpg";
+A.find(a=>a.id==="landingdebris").img="https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA25218.jpg";
+A.find(a=>a.id==="alsep").img="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/lunar-science/2023/09/as14-67-09361_orig.jpg";
+A.find(a=>a.id==="mooncart").img="https://ids.si.edu/ids/deliveryService?id=NASM-A19730126000cp03&max=900";
+A.find(a=>a.id==="firststepcamera").img="https://ids.si.edu/ids/deliveryService?id=NASM-SI-2009-4813&max=900";
+A.find(a=>a.id==="spirit").img="https://d2pn8kiwq2w21t.cloudfront.net/original_images/missionswebmer.jpg";
+A.find(a=>a.id==="insight").img="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/resources/detail_files/2/5/25325_PIA22743-16.jpg";
+const hcard=a=>{const meta=HC[a.id]||[a.name,a.mission||a.type,a.tag||a.short||"Explore this mission."];return `<a class="hc" href="#/artifact/${a.id}" aria-label="${a.name}"><img src="${a.img}" alt="${a.name} on ${a.world}"><span class="pill ${a.world}">${a.world}</span><div class="ft"><span class="ar">→</span><div><b>${meta[0]}</b><small>${meta[1]}</small></div><div class="d">${meta[2]}</div></div></a>`};
 const TL=[["July 20, 1969","Apollo 11 lands","Moon","apollo11","The lunar module touches down at Tranquility Base."],["July 21, 1969","Retroreflector deployed","Moon","apollo11","A passive laser reflector is placed on the lunar surface."],["December 4, 1996","Mars Pathfinder launches","Mars","sojourner","Sojourner travels to Mars aboard the lander."],["July 4, 1997","Pathfinder lands","Mars","sojourner","The first Mars rover begins its mission."],["September 27, 1997","Final Pathfinder transmission","Mars","sojourner","The last data transmission from the Pathfinder mission."],["July 7, 2003","Opportunity launches","Mars","opportunity","MER-B begins its journey to Mars."],["January 24, 2004","Opportunity lands","Mars","opportunity","The rover starts exploring Meridiani Planum."],["June 10, 2018","Last communication","Mars","opportunity","A dust storm cuts off the rover’s sunlight."],["February 13, 2019","Mission declared complete","Mars","opportunity","NASA formally ends the mission."]];
 
 const F=[
@@ -576,4 +717,33 @@ function apply(){(window.__P||[]).forEach(p=>E[p[0]]=p[1]);D.lang=lang;D.dir=lan
 b.onclick=()=>{lang=lang=='ar'?'en':'ar';try{localStorage.setItem('echoes-lang',lang)}catch(e){}apply()};
 new MutationObserver(ms=>{if(lang!='ar')return;(window.__P||[]).forEach(p=>E[p[0]]=p[1]);for(const m of ms)m.addedNodes.forEach(n=>{if(n.nodeType==1||n.nodeType==3)tr(n)})}).observe(document.body,{childList:true,subtree:true});
 apply()})();
+
+/* Official mission imagery for the five previously unpictured archive entries. */
+A.find(a=>a.id==="mco").img="https://www.nasa.gov/wp-content/uploads/2022/09/mars_exploration_14_mars_climate_orbiter.jpg";
+A.find(a=>a.id==="mco").credit="NASA/JPL-Caltech — Mars Climate Orbiter concept shown above Mars.";
+A.find(a=>a.id==="mpl").img="https://www.nasa.gov/wp-content/uploads/2022/09/mars_exploration_15_mars_polar_lander.jpg";
+A.find(a=>a.id==="mpl").credit="NASA/JPL-Caltech — Mars Polar Lander concept on the Martian surface.";
+A.find(a=>a.id==="lm").img="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/lunar-science/2023/09/as14-66-9306_orig.jpg";
+A.find(a=>a.id==="lm").credit="NASA/JSC — Apollo 14 Lunar Module on the lunar surface.";
+A.find(a=>a.id==="huygens").img="https://media.esa.int/legacy/web/images/esa_multimedia/images/2001/11/artist_s_impression_of_esa_s_huygens_probe_on_titan/9192342-5-eng-GB/25873/image-thumb__25873__fit_large/Artist_s_impression_of_ESA_s_Huygens_probe_on_Titan.fd3cc71a.webp";
+A.find(a=>a.id==="huygens").credit="ESA / D. Ducros — Huygens probe on Titan (artist's impression).";
+A.find(a=>a.id==="mir").img="https://www.nasa.gov/wp-content/uploads/static/history/SP-4225/imagery/photos/sts-86/86p-065.jpg";
+A.find(a=>a.id==="mir").credit="NASA — Mir Space Station over Earth, STS-86 photo.";
+/* Replace the isolated white-background museum shot with the real MET in use on the Moon. */
+A.find(a=>a.id==="mooncart").img="https://images-assets.nasa.gov/image/AS14-68-9405/AS14-68-9405~orig.jpg";
+A.find(a=>a.id==="mooncart").credit="NASA/JSC — AS14-68-9405, Modularized Equipment Transporter (MET) in use on the lunar surface.";
+
+/* Keep authentic photos on the cards; animate the original imagery only inside each opened artifact page. */
+const __echoesBaseArtifact = R.artifact;
+R.artifact = id => {
+  let page = __echoesBaseArtifact(id);
+  const a = A.find(x=>x.id===id);
+  if (!a || !a.img || page.includes('Artifact not found')) return page;
+  const worldKey = /Titan/i.test(a.world) ? 'titan' : /Mars/i.test(a.world) ? 'mars' : /Moon/i.test(a.world) ? 'moon' : 'earth';
+  const motionLabel = L("Original mission imagery — animated view", "لقطة متحركة من الصورة الأصلية للمهمة");
+  const video = id === 'huygens' ? `<div class="echoes-real-video"><iframe src="https://www.esa.int/content/view/embedjw/409591" title="ESA Huygens descent to Titan animation" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe><small>ESA / NASA / JPL — animation reconstructed from Huygens instrument data</small></div>` : '';
+  const motion = `<section class="echoes-motion-section alt"><div class="w"><span class="idx">MISSION MOTION</span><h2>${motionLabel}</h2><p class="sub">${L("The vehicle remains the real NASA/ESA image. Motion is applied to the original image in this detail view; the archive cards stay unchanged.","المركبة نفسها في الصورة الأصلية من ناسا/وكالة الفضاء الأوروبية؛ الحركة هنا على الصورة الأصلية داخل صفحة التفاصيل فقط، بينما تظل بطاقات الأرشيف كما هي.")}</p><div class="echoes-motion-scene ${worldKey}"><div class="echoes-stars"></div><div class="echoes-planet-horizon"></div><img class="echoes-moving-photo" src="${a.img}" alt="${a.name} — original mission image" loading="lazy"><span class="echoes-motion-caption">${a.name}</span></div>${video}<div class="echoes-credit">${a.credit||"NASA / ESA mission image"}</div></div></section>`;
+  const marker = '<section class="alt"><div class="w two"><h2>The Story</h2>';
+  return page.includes(marker) ? page.replace(marker, motion + marker) : page;
+};
 </script></body></html>
